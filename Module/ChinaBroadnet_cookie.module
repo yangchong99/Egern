@@ -1,0 +1,12 @@
+#!name=ChinaBroadnet_cookie
+#!desc=获取广电cookie
+#!author=yangchong99 by wuhuhuuuu
+#!icon=https://github.com/wuhuhuuuu/study/raw/main/Scripts/ChinaBroadnet/ChinaBroadnet.png
+#!homepage=https://raw.githubusercontent.com/yangchong99/Loon/main/plugin/ChinaBroadnet_cookie.plugin
+#!update=2025-04-24 23:01:19
+
+[Script]
+广电cookie = type=http-request, pattern=https://wx.10099.com.cn/contact-web/api/busi/qryUserInfo, script-path=https://github.com/wuhuhuuuu/study/raw/main/Scripts/ChinaBroadnet/ChinaBroadnet.cookie.js, requires-body=true, timeout=10
+
+[MITM]
+hostname = %APPEND% wx.10099.com.cn
