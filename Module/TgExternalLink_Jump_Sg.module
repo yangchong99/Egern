@@ -1,0 +1,8 @@
+#!name=TgExternalLink-Jump-Sg
+#!desc=Tg外部链接跳转Sg
+
+[URL Rewrite]
+^https?:\/\/t\.me\/(.+) sg://resolve?domain=$1 302
+
+[MITM]
+hostname = %APPEND% t.me
