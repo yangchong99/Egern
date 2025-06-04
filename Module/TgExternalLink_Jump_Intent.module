@@ -1,0 +1,8 @@
+#!name=TgExternalLink-Jump-Intent
+#!desc=Tg外部链接跳转Intent
+
+[URL Rewrite]
+^https?:\/\/t\.me\/(.+) intent://resolve?domain=$1 302
+
+[MITM]
+hostname = %APPEND% t.me
