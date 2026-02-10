@@ -1,0 +1,10 @@
+#!name=smzdm_cookie
+#!desc=获取什么值得买Cookie
+#!author=yangchongUncle
+#!update=2026-02-11 03:09:15
+
+[MITM]
+hostname = %APPEND% user-api.smzdm.com
+
+[Script]
+什么值得买获取Cookie = type=http-request,pattern=^https?:\/\/user-api\.smzdm\.com\/checkin$,script-path=https://raw.githubusercontent.com/yangchong99/Egern/main/Scripts/smzdm_cookie.js
