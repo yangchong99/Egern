@@ -1,0 +1,61 @@
+name: 移动余量
+description: 查询套餐内通话、套餐使用情况
+compat_arguments:
+  CRONEXP: 0 9 * * *
+  TIMEOUT: "60"
+  禁用获参重写: ""
+  手机号码: ""
+  BarkKey: ""
+  禁用PANEL: ""
+  调试模式: "0"
+  静默模式: "0"
+  Scriptable服务模式: "0"
+compat_arguments_desc: |-
+  [参数设置]
+
+  ⓵ CRONEXP: 遵循CRON表达式, 具体请参考https://tool.lu/crontab/。
+
+  ⓶ TIMEOUT: 脚本运行时间, 单位为秒, 超过该时间会强制中断。
+
+  ⓷ 禁用脚本：填写#禁用捕获参数重写。
+
+  ⓸ 手机号码：抓取参数对应的手机号码。
+
+  ⓹ BarkKey: 优先级高于代理通知,填写后将只使用Bark推送。
+
+  ⓺ 禁用PANEL: 输入#表示禁用PANEL，删除#表示开启面板。
+
+  ⓻ 调试模式：true/1/是为开启，其他均为关闭，开启后输调试日志。
+
+  ⓼ 静默模式：true/1/是为开启，其他均为关闭，开启后不会收到通知。
+
+  ⓽ Scriptable服务模式：0为关闭,1为开启，为小组件设置的服务项，不使用请无视。
+author: ChinaMobileDev
+dns: {}
+scriptings:
+- schedule:
+    name: 移动余量查询
+    cron: 0 9 * * *
+    script_url: https://github.com/ChinaTelecomOperators/ChinaMobile/releases/download/Prerelease-Alpha/10086.js
+    arguments:
+      _compat.$argument: phonenumber=&bark_key=&debug=0&silent=0&service=0
+    timeout: 60
+- http_request:
+    name: 中国移动获取参数
+    match: ^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(uam(onekey|randcode)login|realPersonAuthentication)\/autoLogin
+    script_url: https://github.com/ChinaTelecomOperators/ChinaMobile/releases/download/Prerelease-Alpha/10086.js
+    body_required: true
+- generic:
+    name: 10086-panel
+    script_url: https://github.com/ChinaTelecomOperators/ChinaMobile/releases/download/Prerelease-Alpha/10086.js
+    arguments:
+      _compat.$argument: icon=arrow.up.arrow.down.circle&icon-color=#5d84f8&phonenumber=&bark_key=&debug=0&silent=0&service=0
+    timeout: 60
+mitm:
+  hostnames:
+    includes:
+    - client.app.coc.10086.cn
+panels:
+- name: 10086-panel
+  script_name: 10086-panel
+  update_interval: 21600
