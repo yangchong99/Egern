@@ -1,0 +1,30 @@
+name: 订阅流量查询
+author: @z-jinke
+description: 查看机场流量使用
+
+compat_arguments:
+  A名称: ''
+  A地址: ''
+  A重置: ''
+  B名称: ''
+  B地址: ''
+  B重置: ''
+  C名称: ''
+  C地址: ''
+  C重置: ''
+  D名称: ''
+  D地址: ''
+  D重置: ''
+  E名称: ''
+  E地址: ''
+  E重置: ''
+compat_arguments_desc: "1.本模块不需要编码订阅地址可直接使用\n2.ABCDE代表不同订阅的地址和备注名称以及流量重置日期\n\n支持导入5个订阅显示\n支持百分比进度\n支持订阅套餐重置填写重置日期"
+
+scriptings:
+- generic:
+    name: 订阅面板
+    script_url: https://raw.githubusercontent.com/yangchong99/Egern/main/Scripts/Flowquery.js
+    arguments:
+      _compat.$argument: "title1={{{A名称}}}&url1={{{A地址}}}&resetDay1={{{A重置}}}&title2={{{B名称}}}&url2={{{B地址}}}&resetDay2={{{B重置}}}&title3={{{C名称}}}&url3={{{C地址}}}&resetDay3={{{C重置}}}&title4={{{D名称}}}&url4={{{D地址}}}&resetDay4={{{D重置}}}&title5={{{E名称}}}&url5={{{E地址}}}&resetDay5={{{E重置}}}"
+panels:
+- name: 订阅面板
