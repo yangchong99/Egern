@@ -1,5 +1,4 @@
 name: 订阅流量查询
-author: @z-jinke
 description: 查看机场流量使用
 
 compat_arguments:
