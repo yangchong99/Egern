@@ -1,9 +1,10 @@
 // 2025.11.28 15:19
 // author：@z-jinke
+// 修改时间：2026-02-16 01:23:56
 
 // 处理外部参数
 const args = {};
-$argument.split("&").forEach(p => {
+$argument.split("&").forEach((p) => {
   const index = p.indexOf("=");
   const key = p.substring(0, index);
   const value = p.substring(index + 1);
@@ -31,7 +32,7 @@ function getResetInfo(resetDay) {
 
 // 获取订阅流量信息
 function fetchInfo(url, resetDay) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     $httpClient.get(
       { url, headers: { "User-Agent": "Quantumult%20X/1.5.2" } },
       (err, resp) => {
@@ -41,11 +42,12 @@ function fetchInfo(url, resetDay) {
         }
 
         const data = {};
-        const headerKey = Object.keys(resp.headers)
-          .find(k => k.toLowerCase() === "subscription-userinfo");
+        const headerKey = Object.keys(resp.headers).find(
+          (k) => k.toLowerCase() === "subscription-userinfo",
+        );
 
         if (headerKey && resp.headers[headerKey]) {
-          resp.headers[headerKey].split(";").forEach(p => {
+          resp.headers[headerKey].split(";").forEach((p) => {
             const [k, v] = p.trim().split("=");
             if (k && v) data[k] = parseInt(v);
           });
@@ -74,14 +76,13 @@ function fetchInfo(url, resetDay) {
         const usedFlow = formatUsed(used);
         const totalFlow = formatTotal(total);
 
-        const lines = [
-          `已用：${usedFlow}➟${percent}%`,
-          `流量：${totalFlow}`
-        ];
+        const lines = [`已用：${usedFlow}➟${percent}%`, `流量：${totalFlow}`];
 
         if (data.expire) {
           const d = new Date(data.expire * 1000);
-          lines.push(`到期：${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}号`);
+          lines.push(
+            `到期：${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}号`,
+          );
         }
 
         if (resetDay) {
@@ -89,9 +90,23 @@ function fetchInfo(url, resetDay) {
         }
 
         resolve(lines.join("\n"));
-      }
+      },
     );
   });
+}
+
+// ===== 顶部执行时间（全局一次）=====
+function pad2(n) {
+  return String(n).padStart(2, "0");
+}
+function runAtLine() {
+  const d = new Date();
+  const MM = pad2(d.getMonth() + 1);
+  const DD = pad2(d.getDate());
+  const hh = pad2(d.getHours());
+  const mm = pad2(d.getMinutes());
+  const ss = pad2(d.getSeconds());
+  return `⏱ 执行时间：${MM}-${DD} ${hh}:${mm}:${ss}`;
 }
 
 // 依次处理多个订阅
@@ -106,21 +121,19 @@ function fetchInfo(url, resetDay) {
     if (args[urlKey]) {
       const content = await fetchInfo(
         args[urlKey],
-        args[resetKey] ? parseInt(args[resetKey]) : null
+        args[resetKey] ? parseInt(args[resetKey]) : null,
       );
 
       panels.push(
-        args[titleKey]
-          ? `机场：${args[titleKey]}\n${content}`
-          : content
+        args[titleKey] ? `机场：${args[titleKey]}\n${content}` : content,
       );
     }
   }
 
   $done({
     title: "订阅流量",
-    content: panels.join("\n\n"),
+    content: runAtLine() + "\n\n" + panels.join("\n\n"),
     icon: "antenna.radiowaves.left.and.right.circle.fill",
-    "icon-color": "#00E28F"
+    "icon-color": "#00E28F",
   });
 })();
