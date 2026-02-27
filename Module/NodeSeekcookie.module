@@ -1,0 +1,13 @@
+name: NodeSeek_cookie
+description: NS论坛获取cookie
+author: 怎么肥事（modified by yangchongUncle）
+homepage: https://raw.githubusercontent.com/yangchong99/Egern/main/Module/NodeSeekcookie.module
+scriptings:
+  - http_request:
+      name: NS_获取_Headers
+      match: ^https:\/\/www\.nodeseek\.com\/api\/account\/getInfo\/\d+\?readme=1$
+      script_url: https://raw.githubusercontent.com/yangchong99/Egern/main/Scripts/NodeSeekcheckin.js
+      body_required: false
+mitm:
+  hostnames:
+    - www.nodeseek.com
